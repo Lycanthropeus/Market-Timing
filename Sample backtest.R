@@ -23,4 +23,9 @@ View(data$Signal)
 
 
 data$Return = dailyReturn(prices)
-data$Return
+data
+
+position = ifelse(data$)
+
+data$StrategyReturn = if
+cumprod(1+data$Return)

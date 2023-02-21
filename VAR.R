@@ -34,3 +34,12 @@ pp.test(diff(log_sp500))
 kpss.test(diff(log_sp500))
 adf.test(diff(log_sp500))
 
+
+#Checking if CFNAI series is stationary
+
+my_data_series = data.frame(diff(cfnai_u$CFNAI),diff(cfnai_u$SP500.Values))
+my_data_series
+
+var_model = vars::VAR(my_data_series,p=2,type = "const")
+var_model
+summary(var_model)
