@@ -8,6 +8,8 @@ library(xts)
 library(PerformanceAnalytics)
 }))
 
+.libPaths("D:/4th Sem Work/Research Work_Rahul/Market-Timing/libs/")
+
 #Read data
 cfnai_u = read.csv("./data/cfnai.csv")
 cfnai_u$Date = as.Date(parse_date_time(cfnai_u$Date,"dmy"))
