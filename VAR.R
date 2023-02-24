@@ -8,12 +8,11 @@ library(xts)
 library(PerformanceAnalytics)
 }))
 
-.libPaths("D:/4th Sem Work/Research Work_Rahul/Market-Timing/libs/")
 
+source("./helper_functions.R")
+cfnai = load_and_preprocess_data()
 #Read data
-cfnai_u = read.csv("./data/cfnai.csv")
-cfnai_u$Date = as.Date(parse_date_time(cfnai_u$Date,"dmy"))
-cfnai_u = tibble(cfnai_u);cfnai_u
+
 
 #Format as XTS object for pretty plotting
 cfnai_pl = as.xts(cfnai_u$SP500.Values,order.by = cfnai_u$Date,frequency=12)
