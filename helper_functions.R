@@ -10,10 +10,16 @@ load_and_preprocess_data = function() {
     library(xts)
     library(PerformanceAnalytics)
   }))
-  cfnai_u = read.csv("./data/cfnai.csv")
-  cfnai_u$Date = as.Date(parse_date_time(cfnai_u$Date,"dmy"))
-  cfnai_u = tibble(cfnai_u);cfnai_u
-  return (cfnai_u)
+  cfnai = read.csv("./data/cfnai.csv")
+  cfnai$Date = as.Date(parse_date_time(cfnai$Date,"dmy"))
+  cfnai = tibble(cfnai);
+  prices_ts = as.xts(cfnai$SP500.Values,order.by = cfnai$Date)
+  cfnai_ts = as.xts(cfnai$CFNAI,order.by = cfnai$Date)
+  cfnaima3_ts = as.xts(cfnai$CFNAI_MA3,order.by = cfnai$Date)
+  diffusion_ts = as.xts(cfnai$DIFFUSION,order.by = cfnai$Date)
+  df = merge(cfnai_ts,cfnaima3_ts,diffusion_ts,prices_ts)
+  df$returns_ts = Return.calculate(df$prices_ts,"discrete")
+  return (df)
 }
 
 expanding_window_tree = function(sdate,edate){
@@ -35,4 +41,39 @@ expanding_window_tree = function(sdate,edate){
   retval = as.xts(cbind(walkforward_df$Predicted_Returns,walkforward_df$Actual_Returns),order.by = walkforward_df$Date)
   names(retval) = c("Predicted_Returns","Actual_Returns")
   return (retval)
+}
+
+
+test_module = function(x,y,method_){
+  func_ = match.fun(method_)
+  return (func_(x,y))
+}
+
+
+generic_expanding_window = function(sdate,edate,method_,df){
+  func_ = match.fun(method_)
+  dates = index(df)
+  
+  walkforward_df = data.frame(Date=as.Date("2029-09-01"),Predicted_Returns=3.5,Actual_Returns=5.5)
+  
+  for(idx in seq_along(dates)){
+    date = dates[[idx]]
+    if(date >= edate && date < "2022-12-31"){
+      training_data = df[paste0(sdate,"::",date)]
+      next_date = dates[[idx+1]]
+      model = func_(returns_ts ~ diffusion_ts + cfnaima3_ts,data = training_data)
+      loc_prediction = predict(model,df[next_date])
+      g = data.frame(next_date,as.numeric(loc_prediction),as.numeric(df[next_date]$returns_ts))
+      names(g) = c("Date","Predicted_Returns","Actual_Returns")
+      
+      walkforward_df = rbind(walkforward_df,g)
+    }
+  }
+  return (walkforward_df)
+}
+
+generic_rolling_window = function(sdate,edate,method){
+  func_ = match.fun(method_)
+  
+  
 }

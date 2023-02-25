@@ -98,7 +98,7 @@ h = h["1995::2022"]
 View(h)  
 
 View(merge(cumprod(1+h$Actual_Returns),cumprod(1+h$Predicted_Returns)))
-plot(merge(cumprod(1+h$Actual_Returns),cumprod(1+h$Predicted_Returns)))
+plot(merge(cumprod(1+h$Actual_Returns),cumprod(1+h$Predicted_Returns)),main = "Comparison of returns")
 
 addLegend("topleft", on=1, 
           legend.names = c("Actual Returns", "Predicted Returns"), 
