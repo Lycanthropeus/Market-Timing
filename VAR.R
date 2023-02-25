@@ -1,16 +1,5 @@
-suppressMessages(suppressWarnings({
-library(dplyr)
-library(vars)
-library(lubridate)
-library(ggplot2)
-library(tseries)
-library(xts)
-library(PerformanceAnalytics)
-}))
-
-
 source("./helper_functions.R")
-cfnai = load_and_preprocess_data()
+
 #Read data
 
 
