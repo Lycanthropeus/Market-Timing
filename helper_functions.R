@@ -61,8 +61,13 @@ generic_rolling_window = function(sdate,edate,method_,df){
       edate_ = as.Date(dates[[idx+133]])
       
       training_data_rolling = df[paste0(sdate_,"::",edate_)]
-      model_rolling = func_(returns_ts ~ diffusion_ts + cfnaima3_ts,data = training_data_rolling)
       
+      if(method_ == "tree"){
+        model_rolling = func_(returns_ts ~ diffusion_ts + cfnaima3_ts,data = training_data_rolling)
+      }
+      else{
+        model_rolling = func_(returns_ts ~ diffusion_ts + cfnaima3_ts,data = training_data_rolling,method = "svmLinear")
+      }
       next_date = dates[[idx+134]]
       pred_returns = predict(model_rolling,df[next_date])
       actual_returns = df[next_date]$returns_ts

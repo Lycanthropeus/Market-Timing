@@ -2,6 +2,7 @@ source("./helper_functions.R")
 cfnai = load_and_preprocess_data()
 
 
+library(tree)
 
 # Todo @ Niranjan 
 # First implement expanding window decision tree.
