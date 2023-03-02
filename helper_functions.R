@@ -22,7 +22,6 @@ load_and_preprocess_data = function() {
   df$returns_ts = Return.calculate(df$prices_ts,"discrete")
   return (df)
 }
-
 generic_expanding_window = function(sdate,edate,method_,df){
   func_ = match.fun(method_)
   dates = index(df)
@@ -93,3 +92,34 @@ plot_ts = function(df_,title){
     col = c("red","black")
   )
 }
+
+varmodel_expanding_window = function(sdate,edate,df_cfnai){
+  dates = index(df_cfnai)
+  
+  walkforward_df = data.frame(Date=as.Date("2029-09-01"),Predicted_Returns=3.5)
+  
+  for(idx in seq_along(dates)){
+    date = dates[[idx]]
+    # print(date)
+    if(date >= edate && date < "2022-12-31"){
+      training_data = df_cfnai[paste0(sdate,"::",date)]
+      next_date = dates[[idx+1]]
+      # model = func_(returns_ts ~ diffusion_ts + cfnaima3_ts,data = training_data)
+      # model.lag.order = VARselect(training_data,lag.max = 10)$selection[[1]]
+      model.lag.order = 6
+      model = VAR(training_data,p = model.lag.order)
+      
+      loc_prediction = predict(model,n.ahead=1)[[1]]$logrets_ts[[1]]
+      g = data.frame(next_date,exp(as.numeric(loc_prediction)))
+      names(g) = c("Date","Predicted_Returns")
+      # 
+      walkforward_df = rbind(walkforward_df,g)
+    }
+  }
+  walkforward_df.ts = as.xts(walkforward_df$Predicted_Returns,
+                             order.by=walkforward_df$Date)
+  names(walkforward_df.ts) = c("Predicted_Returns")
+  return (walkforward_df.ts["::2022"])
+}
+
+# predict_varmodel = function(varmodel){
