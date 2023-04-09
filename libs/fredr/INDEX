@@ -1,0 +1,51 @@
+fredr-key               FRED API key
+fredr_category          Get a FRED category
+fredr_category_children
+                        Get the child categories for a specified FRED
+                        parent category
+fredr_category_related
+                        Get the related categories for a FRED category.
+fredr_category_related_tags
+                        Get the related FRED tags within a category
+fredr_category_series   Get the series in a category
+fredr_category_tags     Get the FRED tags for a category
+fredr_docs              Open the web documentation for a certain FRED
+                        API topic.
+fredr_endpoints         List of available FRED API endpoints.
+fredr_related_tags      Get related FRED tags given one or more tags
+fredr_release           Get a release of economic data
+fredr_release_dates     Get release dates for a single release of
+                        economic data
+fredr_release_related_tags
+                        Get the related FRED tags for one or more FRED
+                        tags within a release
+fredr_release_series    Get the series on a release of economic data
+fredr_release_sources   Get the sources for a release of economic data
+fredr_release_tables    Get release table trees for a given release
+fredr_release_tags      Get the FRED tags for a release
+fredr_releases          Get all releases of economic data
+fredr_releases_dates    Get release dates for _all_ releases of
+                        economic data.
+fredr_request           Send a request to the FRED API
+fredr_series            Return basic information for a FRED series.
+fredr_series_categories
+                        Get the categories for a FRED series
+fredr_series_observations
+                        Get observations of a FRED series
+fredr_series_release    Get the release for a FRED series
+fredr_series_search_related_tags
+                        Get the related FRED tags for one or more FRED
+                        tags matching a series search
+fredr_series_search_tags
+                        Get the FRED tags for a series search.
+fredr_series_search_text
+                        Search for a FRED series.
+fredr_series_tags       Get the tags for a FRED series
+fredr_series_updates    Get a set of recently updated FRED series
+fredr_series_vintagedates
+                        Get the data vintage dates for a FRED series
+fredr_source            Get a source of economic data
+fredr_source_releases   Get the releases for a source
+fredr_sources           Get _all_ sources of economic data
+fredr_tags              Get FRED series tags
+fredr_tags_series       Find FRED series matching tag names
